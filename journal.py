@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 thank_you = "\nThank you for using the Journal CLI tool created by BelacEr."
-valid_numbers = "\Make sure to enter only valid numbers."
+valid_numbers = "\nMake sure to enter only valid numbers."
 
 
 def enter_number(prompt):
