@@ -26,7 +26,20 @@ Run the journal tool:
 python main.py
 ```
 
+🧠 How to Use
 
+1. Choose an option from the menu:
+
+  - Press 1 to write a new journal entry
+
+  - Press 2 to read all your past entries
+
+  - Press 3 to delete a specific entry
+
+  - Press 4 to exit
+
+ 2. Your entries are saved in my_journal.txt in the same directory.
+    
 This tool was built as a personal project to practice Python and create something meaningful. It’s designed with simplicity and warmth in mind—like a digital notebook that feels just like home.
 
 If you enjoy using it, feel free to star ⭐ the repo!
