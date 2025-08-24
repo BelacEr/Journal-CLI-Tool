@@ -5,7 +5,8 @@ from datetime import datetime
 
 thank_you = "\nThank you for using the Journal CLI tool created by BelacEr."
 valid_numbers = "\nMake sure to enter only valid numbers."
-
+no_journal = "\nThere is no journal, please write one."
+file = "my_journal.txt"
 
 def enter_number(prompt):
     """Make sure that only whole numbers are entered for the menu."""
@@ -28,6 +29,7 @@ def write_entry():
     while True:
         try:
             entry = input("\nWhat's on your mind? ")
+            break
         except KeyboardInterrupt:
             print(thank_you)
             sys.exit()
@@ -55,18 +57,47 @@ def read_entries():
         with open("my_journal.txt", "r") as file:
             entries = file.readlines()
     except FileNotFoundError:
-        print(f"\nThere is no journal, please write one.")
+        print(no_journal)
     else:
         # Check if it's empty.
         if not entries:
-            print("Your journal is empty...")
+            print("\nYour journal is empty. Please write a journal.")
         else:
             # Print each entry one by one.
             for entry in entries:
                 print(entry.strip())
 
-        print("\nEvery word you write is a treasure.... just like you. ♡")
 
+def delete_entry():
+    try:
+        with open("my_journal.txt", "r") as file:
+            entries = file.readlines()
+    except FileNotFoundError:
+        print(no_journal)
+        return
+
+    if not entries:
+        print("\nThere's no journal to delete from. Write something first.")
+        return
+
+    print("\nHere are your entries: ")
+    for index, entry in enumerate(entries, start=1):
+        print(f"{index}. {entry}")
+
+    
+    choice = enter_number("\nWhich entry would you like to remove (Enter the number): ")
+    if 1 <= choice <= len(entries):
+        # Remove the chosen entry
+        del entries[choice - 1]
+
+        # Write the remaining entries back to the file:
+        with open("my_journal.txt", "w") as file:
+            file.writelines(entries)
+
+        print("\nEntry deleted.")
+    else:
+        print("\nThat entry doesn't exist. Let's try again?")
+    
 
 def show_menu():
     print("""
@@ -89,9 +120,10 @@ def main():
         elif choice == 2:
             read_entries()
         elif choice == 3:
-            pass
+            delete_entry()
         elif choice == 4:
             print(thank_you)
             break
         else:
             print(valid_numbers)
+
