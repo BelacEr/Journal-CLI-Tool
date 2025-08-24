@@ -5,11 +5,10 @@ from datetime import datetime
 
 thank_you = "\nThank you for using the Journal CLI tool created by BelacEr."
 valid_numbers = "\nMake sure to enter only valid numbers."
-no_journal = "\nThere is no journal, please write one."
-file = "my_journal.txt"
+
 
 def enter_number(prompt):
-    """Make sure that only whole numbers are entered for the menu."""
+    """Make sure that only whole numbers are entered."""
     while True:
         try:
             return int(input(prompt))
@@ -57,11 +56,11 @@ def read_entries():
         with open("my_journal.txt", "r") as file:
             entries = file.readlines()
     except FileNotFoundError:
-        print(no_journal)
+        print(f"\nThere is no journal, please write one.")
     else:
         # Check if it's empty.
         if not entries:
-            print("\nYour journal is empty. Please write a journal.")
+            print("Your journal is empty. Please, write something.")
         else:
             # Print each entry one by one.
             for entry in entries:
@@ -69,35 +68,36 @@ def read_entries():
 
 
 def delete_entry():
+    """Delete a specific entry by its line number."""
     try:
         with open("my_journal.txt", "r") as file:
             entries = file.readlines()
     except FileNotFoundError:
-        print(no_journal)
-        return
-
-    if not entries:
         print("\nThere's no journal to delete from. Write something first.")
         return
 
-    print("\nHere are your entries: ")
-    for index, entry in enumerate(entries, start=1):
-        print(f"{index}. {entry}")
+    if not entries:
+        print("\nYour journal is empty... like a blank page waiting for your story.")
+        return
+
+    print("\nHere are your entries:")
+    for idx, entry in enumerate(entries, start=1):
+        print(f"{idx}. {entry.strip()}")
 
     
-    choice = enter_number("\nWhich entry would you like to remove (Enter the number): ")
+    choice = enter_number("\nWhich entry would you like to remove? (Enter the number): ")
     if 1 <= choice <= len(entries):
         # Remove the chosen entry
         del entries[choice - 1]
-
-        # Write the remaining entries back to the file:
+            
+        # Write the remaining entries back to the file
         with open("my_journal.txt", "w") as file:
             file.writelines(entries)
-
+            
         print("\nEntry deleted.")
     else:
         print("\nThat entry doesn't exist. Let's try again?")
-    
+
 
 def show_menu():
     print("""
@@ -126,4 +126,3 @@ def main():
             break
         else:
             print(valid_numbers)
-
