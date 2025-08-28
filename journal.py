@@ -108,21 +108,27 @@ def show_menu():
 4. Exit
 """)
 
+def exit_journal():
+    """Gracefully exit the jourmnal tool"""
+    print(thank_you)
+    sys.exit()
 
 def main():
     """Main function of the program."""
+    menu_options = {
+        1: write_entry,
+        2: read_entries,
+        3: delete_entry,
+        4: exit_journal,
+            }    
+
     while True:
         show_menu()
         choice = enter_number("Enter your choice: ")
-        
-        if choice == 1:
-            write_entry()
-        elif choice == 2:
-            read_entries()
-        elif choice == 3:
-            delete_entry()
-        elif choice == 4:
-            print(thank_you)
-            break
+
+        selected_function = menu_options.get(choice)
+
+        if selected_function:
+            selected_function()
         else:
             print(valid_numbers)
